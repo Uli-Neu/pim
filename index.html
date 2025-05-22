@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIM - Product Information Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modal_styles.css">
+    <link rel="stylesheet" href="css/notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>PIM System</h1>
+        </div>
+        <div class="user-info">
+            <span class="user-name">Admin</span>
+            <span class="user-role">Administrator</span>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="toolbar">
+            <button id="btn-new" class="btn"><i class="fas fa-plus"></i> New</button>
+            <button id="btn-save" class="btn"><i class="fas fa-save"></i> Save</button>
+            <button id="btn-clear" class="btn"><i class="fas fa-eraser"></i> Clear</button>
+            <button id="btn-last" class="btn"><i class="fas fa-history"></i> Last Record</button>
+            <button id="btn-update" class="btn"><i class="fas fa-sync"></i> Update</button>
+            <div class="navigation">
+                <button id="btn-prev" class="btn"><i class="fas fa-chevron-left"></i></button>
+                <span id="record-counter">Record 1 of 1</span>
+                <button id="btn-next" class="btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" id="global-search" placeholder="Search in all fields...">
+            <button id="btn-search" class="btn"><i class="fas fa-search"></i> Search</button>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-label">Completion: <span id="completion-percentage">45%</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 45%;"></div>
+            </div>
+        </div>
+
+        <div class="main-form">
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="model">Model:</label>
+                    <div class="input-with-search">
+                        <input type="text" id="model" name="model" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sku">SKU*:</label>
+                    <div class="input-with-search">
+                        <input type="text" id="sku" name="sku" required>
+                    </div>
+                    <div class="field-warning">Warning: This SKU already exists!</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ean">EAN (GTIN):</label>
+                    <div class="input-with-search">
+                        <input type="text" id="ean" name="ean">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <div class="input-with-search">
+                        <select id="category" name="category">
+                            <option value="">Select Category</option>
+                            <option value="modem">Modem</option>
+                            <option value="router">Router</option>
+                            <option value="smartphone">Smartphone</option>
+                            <option value="tablet">Tablet</option>
+                            <option value="accessory">Accessory</option>
+                        </select>
+                    </div>
+                    <button id="btn-manage-category" class="btn"><i class="fas fa-cog"></i> Manage Categories</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <div class="input-with-search">
+                        <select id="status" name="status">
+                            <option value="">Select Status</option>
+                            <option value="active">Active</option>
+                            <option value="development">In Development</option>
+                            <option value="eol">End of Life</option>
+                            <option value="deleted">Deleted</option>
+                        </select>
+                    </div>
+                    <button id="btn-manage-status" class="btn"><i class="fas fa-cog"></i> Manage Statuses</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="image-upload-container">
+                    <div class="image-preview" id="image-preview">
+                        <div class="placeholder-text">
+                            <p>"Picture of model"</p>
+                            <p>Insert an image here</p>
+                            <p>preferably drag and drop</p>
+                        </div>
+                    </div>
+                    <input type="file" id="product-image" name="product-image" accept="image/*" hidden>
+                    <button id="btn-upload-image" class="btn">Upload Image</button>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="package-content">
+                    <h3>Package contents:</h3>
+                    <div class="package-table-container">
+                        <table id="package-table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Main Device</td>
+                                    <td>1</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Power Adapter</td>
+                                    <td>1</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>User Manual</td>
+                                    <td>1</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-package-item" class="btn"><i class="fas fa-plus"></i> Add Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="properties">Properties</button>
+                <button class="tab-btn" data-tab="languages">Languages</button>
+                <button class="tab-btn" data-tab="status">Status</button>
+                <button class="tab-btn" data-tab="packaging">Packaging Logistics</button>
+                <button class="tab-btn" data-tab="address">Address</button>
+                <button class="tab-btn" data-tab="category">Category</button>
+                <button class="tab-btn" data-tab="compatible">Compatible</button>
+                <button class="tab-btn" data-tab="serial">Serial No.</button>
+                <button class="tab-btn" data-tab="imei">IMEI/MAC</button>
+                <button class="tab-btn" data-tab="software">Software</button>
+                <button class="tab-btn" data-tab="manuals">User Manuals</button>
+                <button class="tab-btn" data-tab="accessories">Accessories</button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Properties Tab -->
+                <div class="tab-pane active" id="properties-tab">
+                    <h3>Technical Properties</h3>
+                    <p>Here you can manage the technical properties of the product.</p>
+                    <div class="properties-container">
+                        <table id="properties-table">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Value</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Processor</td>
+                                    <td>Quad-core 2.0 GHz</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>RAM</td>
+                                    <td>4 GB</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Storage</td>
+                                    <td>64 GB</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-property" class="btn"><i class="fas fa-plus"></i> Add Property</button>
+                        <button id="btn-manage-properties" class="btn"><i class="fas fa-cog"></i> Manage Property Types</button>
+                    </div>
+                </div>
+
+                <!-- Languages Tab -->
+                <div class="tab-pane" id="languages-tab">
+                    <h3>Languages Management</h3>
+                    <p>Manage product information in different languages.</p>
+                    <div class="languages-container">
+                        <table id="languages-table">
+                            <thead>
+                                <tr>
+                                    <th>Language Code</th>
+                                    <th>Language Name</th>
+                                    <th>Translation Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>EN</td>
+                                    <td>English</td>
+                                    <td>Complete</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>DE</td>
+                                    <td>German</td>
+                                    <td>Partial</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>FR</td>
+                                    <td>French</td>
+                                    <td>Not Started</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-language" class="btn"><i class="fas fa-plus"></i> Add Language</button>
+                        <button id="btn-manage-languages" class="btn"><i class="fas fa-cog"></i> Manage Languages</button>
+                    </div>
+                </div>
+
+                <!-- Status Tab -->
+                <div class="tab-pane" id="status-tab">
+                    <h3>Status Management</h3>
+                    <p>Manage product lifecycle status.</p>
+                    <div class="status-container">
+                        <div class="form-group">
+                            <label for="lifecycle-status">Lifecycle Status:</label>
+                            <select id="lifecycle-status" name="lifecycle-status">
+                                <option value="active">Active</option>
+                                <option value="development">In Development</option>
+                                <option value="eol">End of Life (EOL)</option>
+                                <option value="deleted">Deleted</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status-date">Status Date:</label>
+                            <input type="date" id="status-date" name="status-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="status-notes">Status Notes:</label>
+                            <textarea id="status-notes" name="status-notes" rows="4"></textarea>
+                        </div>
+                        <button id="btn-add-status" class="btn"><i class="fas fa-plus"></i> Add Status</button>
+                        <button id="btn-manage-statuses" class="btn"><i class="fas fa-cog"></i> Manage Statuses</button>
+                    </div>
+                </div>
+
+                <!-- Packaging Logistics Tab -->
+                <div class="tab-pane" id="packaging-tab">
+                    <h3>Packaging Logistics</h3>
+                    <p>Manage packaging and logistics information.</p>
+                    <div class="packaging-container">
+                        <div class="dynamic-fields">
+                            <div class="form-group">
+                                <label for="package-length">Length (cm):</label>
+                                <input type="number" id="package-length" name="package-length" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="package-width">Width (cm):</label>
+                                <input type="number" id="package-width" name="package-width" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="package-height">Height (cm):</label>
+                                <input type="number" id="package-height" name="package-height" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="package-weight">Weight (kg):</label>
+                                <input type="number" id="package-weight" name="package-weight" step="0.01">
+                            </div>
+                        </div>
+                        <button id="btn-add-packaging" class="btn"><i class="fas fa-plus"></i> Add Packaging</button>
+                        <button id="btn-manage-packaging" class="btn"><i class="fas fa-cog"></i> Manage Packaging</button>
+                    </div>
+                </div>
+
+                <!-- Address Tab -->
+                <div class="tab-pane" id="address-tab">
+                    <h3>Address Management</h3>
+                    <p>Manage addresses related to the product.</p>
+                    <div class="address-container">
+                        <div class="dynamic-fields">
+                            <div class="form-group">
+                                <label for="address-type">Address Type:</label>
+                                <select id="address-type" name="address-type">
+                                    <option value="headquarters">Headquarters</option>
+                                    <option value="factory">Factory</option>
+                                    <option value="warehouse">Warehouse</option>
+                                    <option value="service">Service Center</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="address-street">Street:</label>
+                                <input type="text" id="address-street" name="address-street">
+                            </div>
+                            <div class="form-group">
+                                <label for="address-city">City:</label>
+                                <input type="text" id="address-city" name="address-city">
+                            </div>
+                            <div class="form-group">
+                                <label for="address-country">Country:</label>
+                                <input type="text" id="address-country" name="address-country">
+                            </div>
+                        </div>
+                        <button id="btn-add-address" class="btn"><i class="fas fa-plus"></i> Add Address</button>
+                        <button id="btn-manage-addresses" class="btn"><i class="fas fa-cog"></i> Manage Addresses</button>
+                    </div>
+                </div>
+
+                <!-- Category Tab -->
+                <div class="tab-pane" id="category-tab">
+                    <h3>Category Management</h3>
+                    <p>Manage product categories.</p>
+                    <div class="category-container">
+                        <div class="dynamic-fields">
+                            <div class="form-group">
+                                <label for="category-name">Category Name:</label>
+                                <input type="text" id="category-name" name="category-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="category-parent">Parent Category:</label>
+                                <select id="category-parent" name="category-parent">
+                                    <option value="">None</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="smartphones">Smartphones</option>
+                                    <option value="tablets">Tablets</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="category-active">Active:</label>
+                                <select id="category-active" name="category-active">
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="btn-add-category" class="btn"><i class="fas fa-plus"></i> Add Category</button>
+                        <button id="btn-manage-categories" class="btn"><i class="fas fa-cog"></i> Manage Categories</button>
+                    </div>
+                </div>
+
+                <!-- Compatible Tab -->
+                <div class="tab-pane" id="compatible-tab">
+                    <h3>Compatible Products</h3>
+                    <p>Manage compatible products.</p>
+                    <div class="compatible-container">
+                        <table id="compatible-table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>SKU</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Smartphone X</td>
+                                    <td>SP-X-001</td>
+                                    <td>Smartphone</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tablet Y</td>
+                                    <td>TB-Y-001</td>
+                                    <td>Tablet</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-compatible" class="btn"><i class="fas fa-plus"></i> Add Compatible Product</button>
+                        <button id="btn-manage-compatibles" class="btn"><i class="fas fa-cog"></i> Manage Compatible Products</button>
+                    </div>
+                </div>
+
+                <!-- Serial No. Tab -->
+                <div class="tab-pane" id="serial-tab">
+                    <h3>Serial Numbers</h3>
+                    <p>Manage product serial numbers.</p>
+                    <div class="serial-container">
+                        <table id="serial-table">
+                            <thead>
+                                <tr>
+                                    <th>Serial Number</th>
+                                    <th>Production Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>SN12345678</td>
+                                    <td>2023-01-15</td>
+                                    <td>Active</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>SN23456789</td>
+                                    <td>2023-02-20</td>
+                                    <td>Active</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-serial" class="btn"><i class="fas fa-plus"></i> Add Serial Number</button>
+                        <button id="btn-manage-serials" class="btn"><i class="fas fa-cog"></i> Manage Serial Numbers</button>
+                    </div>
+                </div>
+
+                <!-- IMEI/MAC Tab -->
+                <div class="tab-pane" id="imei-tab">
+                    <h3>IMEI/MAC Management</h3>
+                    <p>Manage IMEI and MAC addresses.</p>
+                    <div class="imei-container">
+                        <table id="imei-table">
+                            <thead>
+                                <tr>
+                                    <th>IMEI/MAC</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>123456789012345</td>
+                                    <td>IMEI</td>
+                                    <td>Active</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>AA:BB:CC:DD:EE:FF</td>
+                                    <td>MAC</td>
+                                    <td>Active</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-imei" class="btn"><i class="fas fa-plus"></i> Add IMEI/MAC</button>
+                        <button id="btn-manage-imeis" class="btn"><i class="fas fa-cog"></i> Manage IMEI/MAC</button>
+                    </div>
+                </div>
+
+                <!-- Software Tab -->
+                <div class="tab-pane" id="software-tab">
+                    <h3>Software Management</h3>
+                    <p>Manage software related to the product.</p>
+                    <div class="software-container">
+                        <table id="software-table">
+                            <thead>
+                                <tr>
+                                    <th>Software Name</th>
+                                    <th>Version</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Operating System</td>
+                                    <td>15.0</td>
+                                    <td>OS</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Firmware</td>
+                                    <td>2.5</td>
+                                    <td>Firmware</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-software" class="btn"><i class="fas fa-plus"></i> Add Software</button>
+                        <button id="btn-manage-software" class="btn"><i class="fas fa-cog"></i> Manage Software</button>
+                    </div>
+                </div>
+
+                <!-- User Manuals Tab -->
+                <div class="tab-pane" id="manuals-tab">
+                    <h3>User Manuals</h3>
+                    <p>Manage user manuals for the product.</p>
+                    <div class="manuals-container">
+                        <table id="manuals-table">
+                            <thead>
+                                <tr>
+                                    <th>Manual Name</th>
+                                    <th>Language</th>
+                                    <th>Format</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>User Guide</td>
+                                    <td>English</td>
+                                    <td>PDF</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Quick Start Guide</td>
+                                    <td>English</td>
+                                    <td>PDF</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-manual" class="btn"><i class="fas fa-plus"></i> Add Manual</button>
+                        <button id="btn-manage-manuals" class="btn"><i class="fas fa-cog"></i> Manage Manuals</button>
+                    </div>
+                </div>
+
+                <!-- Accessories Tab -->
+                <div class="tab-pane" id="accessories-tab">
+                    <h3>Accessories</h3>
+                    <p>Manage accessories for the product.</p>
+                    <div class="accessories-container">
+                        <table id="accessories-table">
+                            <thead>
+                                <tr>
+                                    <th>Accessory Name</th>
+                                    <th>SKU</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Charger</td>
+                                    <td>ACC-CH-001</td>
+                                    <td>Power</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Case</td>
+                                    <td>ACC-CA-001</td>
+                                    <td>Protection</td>
+                                    <td>
+                                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
+                                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button id="btn-add-accessory" class="btn"><i class="fas fa-plus"></i> Add Accessory</button>
+                        <button id="btn-manage-accessories" class="btn"><i class="fas fa-cog"></i> Manage Accessories</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script src="js/tab_content.js"></script>
+    <script src="js/tab_switching.js"></script>
+    <script src="js/button_event_handler.js"></script>
+    <script src="js/modal_manager.js"></script>
+    <script src="js/tab_buttons_handler.js"></script>
+    <script src="js/notification_handler.js"></script>
+</body>
+</html>
