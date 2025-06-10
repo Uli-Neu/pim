@@ -1,7 +1,8 @@
 // Implementiere die restlichen Tabs für die Untertabellen
 
 // Address Tab - Refactored to Table View
-document.getElementById('address-tab').innerHTML = `
+const addressTab = document.getElementById('address-tab');
+if (addressTab) addressTab.innerHTML = `
     <h3>Address Management</h3>
     <p>Manage address information for this product.</p>
     <div class="address-container">
@@ -60,9 +61,11 @@ document.getElementById('address-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // Category Tab - Refactored to Table View
-document.getElementById('category-tab').innerHTML = `
+const categoryTab = document.getElementById('category-tab');
+if (categoryTab) categoryTab.innerHTML = `
     <h3>Category Management</h3>
     <p>Manage product categories and subcategories.</p>
     <div class="category-container">
@@ -117,9 +120,11 @@ document.getElementById('category-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // Packaging Logistics Tab - Refactored to Table View
-document.getElementById('packaging-tab').innerHTML = `
+const packagingTab = document.getElementById('packaging-tab');
+if (packagingTab) packagingTab.innerHTML = `
     <h3>Packaging Logistics</h3>
     <p>Manage packaging and logistics information for this product.</p>
     <div class="packaging-container">
@@ -178,9 +183,11 @@ document.getElementById('packaging-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // Compatible Tab
-document.getElementById('compatible-tab').innerHTML = `
+const compatibleTab = document.getElementById('compatible-tab');
+if (compatibleTab) compatibleTab.innerHTML = `
     <h3>Compatibility Management</h3>
     <p>Manage compatible products and accessories.</p>
     <div class="compatible-container">
@@ -235,9 +242,11 @@ document.getElementById('compatible-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // Serial Number Tab
-document.getElementById('serial-tab').innerHTML = `
+const serialTab = document.getElementById('serial-tab');
+if (serialTab) serialTab.innerHTML = `
     <h3>Serial Number Management</h3>
     <p>Manage serial number ranges for this product.</p>
     <div class="serial-container">
@@ -285,9 +294,11 @@ document.getElementById('serial-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // IMEI/MAC Tab
-document.getElementById('imei-tab').innerHTML = `
+const imeiTab = document.getElementById('imei-tab');
+if (imeiTab) imeiTab.innerHTML = `
     <h3>IMEI/MAC Management</h3>
     <p>Manage IMEI or MAC addresses for this product.</p>
     <div class="imei-container">
@@ -332,9 +343,11 @@ document.getElementById('imei-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // Software Tab
-document.getElementById('software-tab').innerHTML = `
+const softwareTab = document.getElementById('software-tab');
+if (softwareTab) softwareTab.innerHTML = `
     <h3>Software Management</h3>
     <p>Manage software versions and paths for this product.</p>
     <div class="software-container">
@@ -392,9 +405,11 @@ document.getElementById('software-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // Languages Tab
-document.getElementById('languages-tab').innerHTML = `
+const languagesTab = document.getElementById('languages-tab');
+if (languagesTab) languagesTab.innerHTML = `
     <h3>Language Support</h3>
     <p>Manage language support for this product.</p>
     <div class="languages-container">
@@ -449,9 +464,11 @@ document.getElementById('languages-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // Status Tab
-document.getElementById('status-tab').innerHTML = `
+const statusTab = document.getElementById('status-tab');
+if (statusTab) statusTab.innerHTML = `
     <h3>Status History</h3>
     <p>Track status changes for this product.</p>
     <div class="status-container">
@@ -506,6 +523,7 @@ document.getElementById('status-tab').innerHTML = `
         </div>
     </div>
 `;
+}
 
 // Add CSS for table views
 document.head.insertAdjacentHTML('beforeend', `
