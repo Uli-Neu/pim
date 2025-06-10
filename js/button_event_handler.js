@@ -209,7 +209,8 @@ function initializeTabButtons() {
  */
 function initializeTabManageButtons() {
     // Languages tab
-    const manageLanguagesButton = document.querySelector('#languages-tab .manage-button');
+    // Fix selector to match actual button ID
+    const manageLanguagesButton = document.getElementById('btn-manage-languages');
     if (manageLanguagesButton) {
         manageLanguagesButton.addEventListener('click', function() {
             if (window.modalManager) {
@@ -234,7 +235,8 @@ function initializeTabManageButtons() {
     }
     
     // Properties tab
-    const managePropertiesButton = document.querySelector('#properties-tab .manage-button');
+    // Fix selector to match actual button ID
+    const managePropertiesButton = document.getElementById('btn-manage-properties');
     if (managePropertiesButton) {
         managePropertiesButton.addEventListener('click', function() {
             if (window.modalManager) {

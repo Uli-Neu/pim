@@ -3,6 +3,7 @@ const path = require('path');
 const assert = require('assert');
 const { JSDOM, ResourceLoader } = require('jsdom');
 
+// Prevent network requests for external resources
 class LocalResourceLoader extends ResourceLoader {
   fetch(url, options) {
     if (url.startsWith('http')) {
@@ -17,12 +18,11 @@ class LocalResourceLoader extends ResourceLoader {
 
 async function createDom() {
   const base = 'file://' + path.join(__dirname, '..') + '/';
-  const resourceLoader = new LocalResourceLoader();
   return JSDOM.fromFile(path.join(__dirname, '..', 'index.html'), {
     runScripts: 'dangerously',
-    resources: resourceLoader,
-    url: base,
+    resources: new LocalResourceLoader(),
     pretendToBeVisual: true,
+    url: base,
     beforeParse(window) {
       class MockXHR {
         open() {}
@@ -69,10 +69,31 @@ async function testManageCategory(dom) {
   assert.strictEqual(document.getElementById('modal-container').style.display, 'none', 'Management modal should close');
 }
 
+async function testManageStatus(dom) {
+  const { document } = dom.window;
+  const manageStatusBtn = document.getElementById('btn-manage-status');
+  manageStatusBtn.click();
+  assert.strictEqual(document.getElementById('modal-container').style.display, 'block', 'Status management should open');
+  dom.window.modalManager.hideModal();
+  assert.strictEqual(document.getElementById('modal-container').style.display, 'none', 'Status management should close');
+}
+
+async function testManageLanguages(dom) {
+  const { document } = dom.window;
+  document.querySelector("button[data-tab='languages']").click();
+  const manageLangBtn = document.getElementById('btn-manage-languages');
+  manageLangBtn.click();
+  assert.strictEqual(document.getElementById('modal-container').style.display, 'block', 'Languages management should open');
+  dom.window.modalManager.hideModal();
+  assert.strictEqual(document.getElementById('modal-container').style.display, 'none', 'Languages management should close');
+}
+
 async function run() {
   const dom = await loadDom();
   await testAddItemModal(dom);
   await testManageCategory(dom);
+  await testManageStatus(dom);
+  await testManageLanguages(dom);
   console.log('All tests passed');
 }
 
