@@ -162,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    
     // Progress bar functionality
     function updateProgress() {
         const totalFields = document.querySelectorAll('input, select, textarea').length;
