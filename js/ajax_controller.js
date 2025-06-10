@@ -119,9 +119,14 @@ class AjaxController {
         const ean = document.getElementById('ean').value.trim();
         const categoryId = document.getElementById('category').value;
         const statusId = document.getElementById('status').value;
-        
+
         if (!model || !sku) {
             NotificationHandler.showWarning('Model and SKU are required');
+            return false;
+        }
+
+        if (ean && !/^\d{13}$/.test(ean)) {
+            NotificationHandler.showWarning('EAN must be 13 digits');
             return false;
         }
         
