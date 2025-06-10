@@ -2,7 +2,8 @@
 
 // Address Tab - Refactored to Table View
 const addressTab = document.getElementById('address-tab');
-if (addressTab) addressTab.innerHTML = `
+if (addressTab) {
+addressTab.innerHTML = `
     <h3>Address Management</h3>
     <p>Manage address information for this product.</p>
     <div class="address-container">
@@ -65,7 +66,8 @@ if (addressTab) addressTab.innerHTML = `
 
 // Category Tab - Refactored to Table View
 const categoryTab = document.getElementById('category-tab');
-if (categoryTab) categoryTab.innerHTML = `
+if (categoryTab) {
+categoryTab.innerHTML = `
     <h3>Category Management</h3>
     <p>Manage product categories and subcategories.</p>
     <div class="category-container">
@@ -124,7 +126,8 @@ if (categoryTab) categoryTab.innerHTML = `
 
 // Packaging Logistics Tab - Refactored to Table View
 const packagingTab = document.getElementById('packaging-tab');
-if (packagingTab) packagingTab.innerHTML = `
+if (packagingTab) {
+packagingTab.innerHTML = `
     <h3>Packaging Logistics</h3>
     <p>Manage packaging and logistics information for this product.</p>
     <div class="packaging-container">
@@ -187,7 +190,8 @@ if (packagingTab) packagingTab.innerHTML = `
 
 // Compatible Tab
 const compatibleTab = document.getElementById('compatible-tab');
-if (compatibleTab) compatibleTab.innerHTML = `
+if (compatibleTab) {
+compatibleTab.innerHTML = `
     <h3>Compatibility Management</h3>
     <p>Manage compatible products and accessories.</p>
     <div class="compatible-container">
@@ -246,7 +250,8 @@ if (compatibleTab) compatibleTab.innerHTML = `
 
 // Serial Number Tab
 const serialTab = document.getElementById('serial-tab');
-if (serialTab) serialTab.innerHTML = `
+if (serialTab) {
+serialTab.innerHTML = `
     <h3>Serial Number Management</h3>
     <p>Manage serial number ranges for this product.</p>
     <div class="serial-container">
@@ -298,7 +303,8 @@ if (serialTab) serialTab.innerHTML = `
 
 // IMEI/MAC Tab
 const imeiTab = document.getElementById('imei-tab');
-if (imeiTab) imeiTab.innerHTML = `
+if (imeiTab) {
+imeiTab.innerHTML = `
     <h3>IMEI/MAC Management</h3>
     <p>Manage IMEI or MAC addresses for this product.</p>
     <div class="imei-container">
@@ -347,7 +353,8 @@ if (imeiTab) imeiTab.innerHTML = `
 
 // Software Tab
 const softwareTab = document.getElementById('software-tab');
-if (softwareTab) softwareTab.innerHTML = `
+if (softwareTab) {
+softwareTab.innerHTML = `
     <h3>Software Management</h3>
     <p>Manage software versions and paths for this product.</p>
     <div class="software-container">
@@ -409,7 +416,8 @@ if (softwareTab) softwareTab.innerHTML = `
 
 // Languages Tab
 const languagesTab = document.getElementById('languages-tab');
-if (languagesTab) languagesTab.innerHTML = `
+if (languagesTab) {
+languagesTab.innerHTML = `
     <h3>Language Support</h3>
     <p>Manage language support for this product.</p>
     <div class="languages-container">
@@ -468,7 +476,8 @@ if (languagesTab) languagesTab.innerHTML = `
 
 // Status Tab
 const statusTab = document.getElementById('status-tab');
-if (statusTab) statusTab.innerHTML = `
+if (statusTab) {
+statusTab.innerHTML = `
     <h3>Status History</h3>
     <p>Track status changes for this product.</p>
     <div class="status-container">
