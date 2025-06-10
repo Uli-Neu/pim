@@ -1,7 +1,6 @@
-const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
-const { JSDOM, ResourceLoader } = require('jsdom');
+const { JSDOM, ResourceLoader, VirtualConsole } = require('jsdom');
 
 // Prevent network requests for external resources
 class LocalResourceLoader extends ResourceLoader {
@@ -22,6 +21,7 @@ async function createDom() {
     runScripts: 'dangerously',
     resources: new LocalResourceLoader(),
     pretendToBeVisual: true,
+    virtualConsole: new VirtualConsole().sendTo(console, { omitJSDOMErrors: true }),
     url: base,
     beforeParse(window) {
       class MockXHR {
