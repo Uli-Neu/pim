@@ -237,14 +237,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.getElementById('btn-search');
     const globalSearch = document.getElementById('global-search');
 
-    searchBtn.addEventListener('click', () => {
-        const searchTerm = globalSearch.value.trim();
-        if (searchTerm) {
-            alert(`Searching for: ${searchTerm}`);
-        } else {
-            alert('Please enter a search term');
-        }
-    });
+    if (searchBtn && globalSearch) {
+        searchBtn.addEventListener('click', () => {
+            const searchTerm = globalSearch.value.trim();
+            if (searchTerm) {
+                alert(`Searching for: ${searchTerm}`);
+            } else {
+                alert('Please enter a search term');
+            }
+        });
+    }
 
     // Field-specific search buttons
     document.querySelectorAll('.field-search-btn').forEach(button => {
