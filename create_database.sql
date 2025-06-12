@@ -2,7 +2,7 @@
 
 -- Haupttabellen
 CREATE TABLE categories (
-    category_id INTEGER PRIMARY KEY,
+    category_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     parent_id INTEGER,
     description TEXT,
@@ -10,13 +10,13 @@ CREATE TABLE categories (
 );
 
 CREATE TABLE status_types (
-    status_id INTEGER PRIMARY KEY,
+    status_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT
 );
 
 CREATE TABLE products (
-    product_id INTEGER PRIMARY KEY,
+    product_id INTEGER PRIMARY KEY AUTOINCREMENT,
     model TEXT NOT NULL,
     sku TEXT NOT NULL UNIQUE,
     ean TEXT,
@@ -32,23 +32,23 @@ CREATE TABLE products (
 
 -- Tab-bezogene Tabellen
 CREATE TABLE package_contents (
-    content_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
+    content_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
     item TEXT NOT NULL,
-    quantity INTEGER NOT NULL,
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
 CREATE TABLE property_types (
-    property_type_id INTEGER PRIMARY KEY,
+    property_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     data_type TEXT NOT NULL,
     unit TEXT
 );
 
 CREATE TABLE properties (
-    property_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
+    property_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
     property_type_id INTEGER,
     value TEXT NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(product_id),
@@ -56,24 +56,24 @@ CREATE TABLE properties (
 );
 
 CREATE TABLE languages (
-    language_id INTEGER PRIMARY KEY,
-    code TEXT NOT NULL,
+    language_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    code TEXT NOT NULL UNIQUE,
     name TEXT NOT NULL
 );
 
 CREATE TABLE product_languages (
-    product_language_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    language_id INTEGER,
+    product_language_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    language_id INTEGER NOT NULL,
     translation_status TEXT,
     FOREIGN KEY (product_id) REFERENCES products(product_id),
     FOREIGN KEY (language_id) REFERENCES languages(language_id)
 );
 
 CREATE TABLE product_status_history (
-    status_history_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    status_id INTEGER,
+    status_history_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    status_id INTEGER NOT NULL,
     date DATE NOT NULL,
     notes TEXT,
     FOREIGN KEY (product_id) REFERENCES products(product_id),
@@ -81,7 +81,7 @@ CREATE TABLE product_status_history (
 );
 
 CREATE TABLE packaging_fields (
-    field_id INTEGER PRIMARY KEY,
+    field_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     data_type TEXT NOT NULL,
     unit TEXT,
@@ -89,23 +89,23 @@ CREATE TABLE packaging_fields (
 );
 
 CREATE TABLE packaging_logistics (
-    logistics_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    field_id INTEGER,
+    logistics_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    field_id INTEGER NOT NULL,
     value TEXT,
     FOREIGN KEY (product_id) REFERENCES products(product_id),
     FOREIGN KEY (field_id) REFERENCES packaging_fields(field_id)
 );
 
 CREATE TABLE address_types (
-    address_type_id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL
+    address_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE addresses (
-    address_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    address_type_id INTEGER,
+    address_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    address_type_id INTEGER NOT NULL,
     company TEXT NOT NULL,
     street TEXT,
     city TEXT NOT NULL,
@@ -119,8 +119,8 @@ CREATE TABLE addresses (
 );
 
 CREATE TABLE category_relations (
-    relation_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
+    relation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
     main_category_id INTEGER,
     sub_category_id INTEGER,
     description TEXT,
@@ -130,23 +130,23 @@ CREATE TABLE category_relations (
 );
 
 CREATE TABLE compatibility_types (
-    compatibility_type_id INTEGER PRIMARY KEY,
+    compatibility_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
 );
 
 CREATE TABLE compatible_products (
-    compatible_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    compatible_product_id INTEGER,
-    compatibility_type_id INTEGER,
+    compatible_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    compatible_product_id INTEGER NOT NULL,
+    compatibility_type_id INTEGER NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(product_id),
     FOREIGN KEY (compatible_product_id) REFERENCES products(product_id),
     FOREIGN KEY (compatibility_type_id) REFERENCES compatibility_types(compatibility_type_id)
 );
 
 CREATE TABLE serial_ranges (
-    range_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
+    range_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
     range_start TEXT NOT NULL,
     range_end TEXT NOT NULL,
     batch TEXT,
@@ -154,8 +154,8 @@ CREATE TABLE serial_ranges (
 );
 
 CREATE TABLE identifiers (
-    identifier_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
+    identifier_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
     type TEXT NOT NULL,
     range_start TEXT NOT NULL,
     range_end TEXT NOT NULL,
@@ -163,14 +163,14 @@ CREATE TABLE identifiers (
 );
 
 CREATE TABLE software_types (
-    software_type_id INTEGER PRIMARY KEY,
+    software_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
 );
 
 CREATE TABLE software (
-    software_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    software_type_id INTEGER,
+    software_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    software_type_id INTEGER NOT NULL,
     version TEXT NOT NULL,
     release_date DATE,
     download_url TEXT,
@@ -179,15 +179,15 @@ CREATE TABLE software (
 );
 
 CREATE TABLE manual_types (
-    manual_type_id INTEGER PRIMARY KEY,
+    manual_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
 );
 
 CREATE TABLE manuals (
-    manual_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    manual_type_id INTEGER,
-    language_id INTEGER,
+    manual_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    manual_type_id INTEGER NOT NULL,
+    language_id INTEGER NOT NULL,
     version TEXT NOT NULL,
     file_path TEXT,
     FOREIGN KEY (product_id) REFERENCES products(product_id),
@@ -196,15 +196,15 @@ CREATE TABLE manuals (
 );
 
 CREATE TABLE accessory_types (
-    accessory_type_id INTEGER PRIMARY KEY,
+    accessory_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL
 );
 
 CREATE TABLE accessories (
-    accessory_id INTEGER PRIMARY KEY,
-    product_id INTEGER,
-    accessory_product_id INTEGER,
-    accessory_type_id INTEGER,
+    accessory_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    accessory_product_id INTEGER NOT NULL,
+    accessory_type_id INTEGER NOT NULL,
     compatibility TEXT,
     FOREIGN KEY (product_id) REFERENCES products(product_id),
     FOREIGN KEY (accessory_product_id) REFERENCES products(product_id),
