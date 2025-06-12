@@ -20,6 +20,7 @@ class Database {
         if ($dbPath === null) {
             // Use database file in the bundled "database" directory by default
             $dbPath = __DIR__ . '/database/pim_database.sqlite';
+        }
         // Try MySQL connection first
         try {
             $this->db = new PDO('mysql:host=localhost;dbname=pim_database;charset=utf8', 'root', 'MMindthe131!!');
@@ -29,9 +30,31 @@ class Database {
         } catch (PDOException $e) {
             // MySQL connection failed, try SQLite as fallback
             try {
+                // Ensure directory exists
+                $dir = dirname($dbPath);
+                if (!file_exists($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+
+                $initialize = !file_exists($dbPath);
                 $this->db = new PDO('sqlite:' . $dbPath);
                 $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->db->exec('PRAGMA foreign_keys = ON;');
+
+                // Initialize database if necessary
+                $needInit = $initialize;
+                if (!$needInit) {
+                    $check = $this->db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='products'")->fetch();
+                    $needInit = !$check;
+                }
+                if ($needInit) {
+                    $sqlFile = __DIR__ . '/create_database.sql';
+                    if (file_exists($sqlFile)) {
+                        $sql = file_get_contents($sqlFile);
+                        $this->db->exec($sql);
+                    }
+                }
+
                 $this->dbType = 'sqlite';
                 return;
             } catch (PDOException $e2) {
