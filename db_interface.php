@@ -16,7 +16,10 @@ class Database {
      * Constructor - establishes connection to the database
      * Tries MySQL first, then falls back to SQLite
      */
-    public function __construct($dbPath = 'pim_database.sqlite') {
+    public function __construct($dbPath = null) {
+        if ($dbPath === null) {
+            // Use database file in the bundled "database" directory by default
+            $dbPath = __DIR__ . '/database/pim_database.sqlite';
         // Try MySQL connection first
         try {
             $this->db = new PDO('mysql:host=localhost;dbname=pim_database;charset=utf8', 'root', 'MMindthe131!!');
