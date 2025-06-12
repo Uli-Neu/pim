@@ -1,3 +1,7 @@
 node_modules/
 package-lock.json
 /database/pim_database.sqlite
+adminer-sqlite.php
+adminer.php
+webhook.log
+webhook.php
