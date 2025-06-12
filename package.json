@@ -1,0 +1,24 @@
+{
+  "name": "pim",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/button_test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uli-Neu/pim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Uli-Neu/pim/issues"
+  },
+  "homepage": "https://github.com/Uli-Neu/pim#readme",
+  "dependencies": {
+    "jsdom": "^26.1.0"
+  }
+}

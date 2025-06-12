@@ -119,9 +119,14 @@ class AjaxController {
         const ean = document.getElementById('ean').value.trim();
         const categoryId = document.getElementById('category').value;
         const statusId = document.getElementById('status').value;
-        
-        if (\!model || \!sku) {
+
+        if (!model || !sku) {
             NotificationHandler.showWarning('Model and SKU are required');
+            return false;
+        }
+
+        if (ean && !/^\d{13}$/.test(ean)) {
+            NotificationHandler.showWarning('EAN must be 13 digits');
             return false;
         }
         
@@ -314,7 +319,7 @@ class AjaxController {
         const xhr = new XMLHttpRequest();
         xhr.open(method, this.baseUrl + url, true);
         
-        if (method \!== 'GET') {
+        if (method !== 'GET') {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         }
         
@@ -345,7 +350,7 @@ class AjaxController {
             });
         };
         
-        if (data && method \!== 'GET') {
+        if (data && method !== 'GET') {
             // Convert data object to URL-encoded string
             const formData = new URLSearchParams();
             for (const key in data) {
@@ -426,7 +431,7 @@ function initializeAjaxButtonHandlers() {
     if (searchButton) {
         searchButton.addEventListener('click', function() {
             const searchInput = document.getElementById('global-search');
-            if (searchInput && searchInput.value.trim() \!== '') {
+            if (searchInput && searchInput.value.trim() !== '') {
                 window.ajaxController.searchProducts(searchInput.value.trim());
             } else {
                 NotificationHandler.showWarning('Please enter a search term');
